@@ -6,7 +6,7 @@
 
 **MCP server for Printful product management.** Gives Claude direct access to Printful — upload designs, save templates and publish products to WooCommerce without writing scripts.
 
-Uses [printful-cli](https://github.com/cr0hn/printful-cli) as the underlying library. For WooCommerce management (categories, descriptions, images after publishing) use [mcp-woocommerce](https://github.com/cr0hn/mcp-woocommerce).
+Built on top of [printful-cli](https://github.com/cr0hn/prinful-cli), which is installed automatically as a dependency — no separate setup needed. For WooCommerce management after publishing (categories, descriptions, images) use [mcp-woocommerce](https://github.com/cr0hn/mcp-woocommerce).
 
 ---
 
@@ -24,35 +24,34 @@ Uses [printful-cli](https://github.com/cr0hn/printful-cli) as the underlying lib
 
 ---
 
-## Prerequisites
-
-1. **printful-cli installed** — this MCP uses it as a library:
-   ```bash
-   cd scripts/printful-cli && uv tool install --editable .
-   ```
-
-2. **Bearer token** — for file uploads:
-   ```bash
-   printful-cli config set-token YOUR_TOKEN
-   # or set PRINTFUL_TOKEN env var
-   ```
-
-3. **Active session** — for saving templates and publishing:
-   ```bash
-   printful-cli auth  # opens browser for login
-   ```
-
----
-
 ## Installation
 
-```bash
-# From local source
-cd scripts/mcp-printful && uv sync
+Installing `mcp-printful` also installs `printful-cli` automatically — no separate step needed.
 
-# Future: from GitHub
+```bash
+# Run directly with uvx (no install required)
 uvx --from git+https://github.com/cr0hn/mcp-printful mcp-printful
+
+# Or install permanently
+uv tool install git+https://github.com/cr0hn/mcp-printful
 ```
+
+### First-time setup
+
+After installing, configure your credentials once:
+
+```bash
+# Bearer token — for file uploads (get it at developers.printful.com/tokens)
+printful-cli config set-token YOUR_TOKEN
+
+# WooCommerce store ID
+printful-cli config set-store YOUR_STORE_ID
+
+# Browser login — for saving templates and publishing (opens browser)
+printful-cli auth
+```
+
+These are stored in `~/.config/printful-cli/` and shared between the CLI and the MCP.
 
 ---
 
