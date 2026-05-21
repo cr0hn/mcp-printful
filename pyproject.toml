@@ -1,0 +1,61 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "mcp-printful"
+version = "0.1.0"
+description = "MCP server for Printful product management — upload designs, create templates and publish to WooCommerce via Claude"
+readme = "README.md"
+requires-python = ">=3.13"
+license = { text = "MIT" }
+authors = [{ name = "cr0hn", email = "cr0hn@cr0hn.com" }]
+keywords = ["mcp", "printful", "woocommerce", "print-on-demand", "claude"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.13",
+]
+dependencies = [
+    "fastmcp>=2.0",
+    "printful-cli",
+]
+
+[project.urls]
+Homepage   = "https://github.com/cr0hn/mcp-printful"
+Repository = "https://github.com/cr0hn/mcp-printful"
+Issues     = "https://github.com/cr0hn/mcp-printful/issues"
+
+[project.scripts]
+mcp-printful = "mcp_printful.__main__:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/mcp_printful"]
+
+[tool.uv.sources]
+printful-cli = { path = "../printful-cli", editable = true }
+
+[dependency-groups]
+dev = [
+    "pytest>=8",
+    "pytest-asyncio>=0.24",
+    "pytest-cov>=7",
+    "pytest-mock>=3.14",
+]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths   = ["tests"]
+addopts     = "--cov=mcp_printful --cov-report=term-missing --cov-fail-under=90 --ignore=tests/e2e"
+
+[tool.coverage.run]
+source = ["src/mcp_printful"]
+omit   = ["*/tests/*", "*/__main__.py"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "if __name__ == .__main__.:",
+]
