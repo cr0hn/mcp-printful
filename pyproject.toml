@@ -20,7 +20,7 @@ classifiers = [
 ]
 dependencies = [
     "fastmcp>=2.0",
-    "printful-cli",
+    "printful-cli @ git+https://github.com/cr0hn/prinful-cli",
 ]
 
 [project.urls]
@@ -34,8 +34,6 @@ mcp-printful = "mcp_printful.__main__:main"
 [tool.hatch.build.targets.wheel]
 packages = ["src/mcp_printful"]
 
-[tool.uv.sources]
-printful-cli = { path = "../printful-cli", editable = true }
 
 [dependency-groups]
 dev = [
